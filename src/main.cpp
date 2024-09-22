@@ -2,7 +2,7 @@
 
 int main() {
     // Créer une fenêtre SFML
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Project NoName");
 
     // Créer un cercle
     sf::CircleShape shape(50.f);
