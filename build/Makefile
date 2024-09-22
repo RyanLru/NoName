@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -Wall -Iinclude
 
 # Bibliothèques
-LIBS = -ljsoncpp
+LIBS = -ljsoncpp -lsfml-graphics -lsfml-window -lsfml-system
 
 # Fichiers source
 SRCDIR = ../src
@@ -16,7 +16,6 @@ INCDIR = ../include
 
 # Exécutable
 EXEC = NoName
-
 
 # Règle de compilation
 $(EXEC): $(SRCS)
