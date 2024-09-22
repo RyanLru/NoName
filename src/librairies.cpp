@@ -12,6 +12,10 @@ sf::Sprite Librairies::createSprite(const std::string path, int x, int y, float 
     // Créer un sprite
     sf::Sprite sprite;
     sprite.setTexture(texture);
+    // Recalculer la position pour centrer le sprite
+    x -= texture.getSize().x * scale / 2;
+    y -= texture.getSize().y * scale / 2;
+    
     sprite.setPosition(x, y);
     sprite.setScale(scale, scale);
 
@@ -21,7 +25,7 @@ sf::Sprite Librairies::createSprite(const std::string path, int x, int y, float 
 // Fonction pour un Texte
 sf::Text Librairies::createText(const std::string text, int x, int y, int size, sf::Font &font) {
     // Créer une font
-    if (!font.loadFromFile("../assets/arial.ttf")) {
+    if (!font.loadFromFile("../assets/fonts/arial.ttf")) {
         std::cerr << "Erreur lors du chargement de la police arial.ttf" << std::endl;
     }
 
