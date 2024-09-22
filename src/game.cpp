@@ -10,9 +10,8 @@ Game::Game() {
     // Créer un objet de la classe Librairies
     Librairies librairies;
 
-    // Ajouter un sprite
-    sf::Texture texture;
-    sf::Sprite sprite = librairies.createSprite("../assets/Button.png", 0, 0, 1, texture);
+    // Création d'un Surface Cliquable
+    sf::RectangleShape clickableSurface = librairies.createClickableSurface(100, 100, 200, 50);
 
     // Boucle principale
     while (window.isOpen()) {
@@ -24,9 +23,6 @@ Game::Game() {
 
         // Effacer la fenêtre
         window.clear();
-
-        // Afficher le sprite
-        window.draw(sprite);
 
         // Afficher la fenêtre
         window.display();
