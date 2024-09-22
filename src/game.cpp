@@ -4,13 +4,13 @@
 
 Game::Game() {
     // Créer une fenêtre SFML
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Project NoName");
+    sf::RenderWindow window(sf::VideoMode(800, 800), "Project NoName");
 
     // Créer un objet de la classe Librairies
     Librairies librairies;
 
     // Ajouter un sprite
-    sf::Sprite sprite = librairies.addSprite(800, 800, 64, 64, "assets/Button.png");
+    sf::Sprite sprite = librairies.addSprite(400, 400, 1.0f, 1.0f, "../assets/Button.png");
 
     // Boucle principale
     while (window.isOpen()) {
