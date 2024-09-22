@@ -16,7 +16,7 @@ Game::Game() {
 
     // Création du l'image de fond du menu
     sf::Texture textureMenu;
-    sf::Sprite spriteMenu = librairies.createSprite("../assets/UI/Menu.png", 960, 540, 2.5, textureMenu);
+    sf::Sprite spriteMenu = librairies.createSprite("../assets/UI/Menu.png", 960, 570, 3, textureMenu);
 
     // Création du Bouton Start
     sf::Texture textureStart;
@@ -26,6 +26,34 @@ Game::Game() {
     sf::Texture textureStartClicked;
     sf::Sprite spriteStartClicked = librairies.createSprite("../assets/button/Start_Pushed.png", 960, 400, 2.5, textureStartClicked);
     sf::RectangleShape clickableSurfaceStart = librairies.createClickableSurface(960 - textureStart.getSize().x * 2.5 / 2, 400 - textureStart.getSize().y * 2.5 / 2, textureStart.getSize().x * 2.5, textureStart.getSize().y * 2.5);
+
+    // Création du Bouton Continuer
+    sf::Texture textureContinue;
+    sf::Sprite spriteContinue = librairies.createSprite("../assets/button/Continue.png", 960, 500, 2.5, textureContinue);
+    sf::Texture textureContinueHover;
+    sf::Sprite spriteContinueHover = librairies.createSprite("../assets/button/Continue_Hover.png", 960, 500, 2.5, textureContinueHover);
+    sf::Texture textureContinueClicked;
+    sf::Sprite spriteContinueClicked = librairies.createSprite("../assets/button/Continue_Pushed.png", 960, 500, 2.5, textureContinueClicked);
+    sf::RectangleShape clickableSurfaceContinue = librairies.createClickableSurface(960 - textureContinue.getSize().x * 2.5 / 2, 500 - textureContinue.getSize().y * 2.5 / 2, textureContinue.getSize().x * 2.5, textureContinue.getSize().y * 2.5);
+
+    // Création du Bouton Options
+    sf::Texture textureOptions;
+    sf::Sprite spriteOptions = librairies.createSprite("../assets/button/Options.png", 960, 600, 2.5, textureOptions);
+    sf::Texture textureOptionsHover;
+    sf::Sprite spriteOptionsHover = librairies.createSprite("../assets/button/Options_Hover.png", 960, 600, 2.5, textureOptionsHover);
+    sf::Texture textureOptionsClicked;
+    sf::Sprite spriteOptionsClicked = librairies.createSprite("../assets/button/Options_Pushed.png", 960, 600, 2.5, textureOptionsClicked);
+    sf::RectangleShape clickableSurfaceOptions = librairies.createClickableSurface(960 - textureOptions.getSize().x * 2.5 / 2, 600 - textureOptions.getSize().y * 2.5 / 2, textureOptions.getSize().x * 2.5, textureOptions.getSize().y * 2.5);
+
+    // Création du Bouton Quitter
+    sf::Texture textureQuit;
+    sf::Sprite spriteQuit = librairies.createSprite("../assets/button/Quit.png", 960, 700, 2.5, textureQuit);
+    sf::Texture textureQuitHover;
+    sf::Sprite spriteQuitHover = librairies.createSprite("../assets/button/Quit_Hover.png", 960, 700, 2.5, textureQuitHover);
+    sf::Texture textureQuitClicked;
+    sf::Sprite spriteQuitClicked = librairies.createSprite("../assets/button/Quit_Pushed.png", 960, 700, 2.5, textureQuitClicked);
+    sf::RectangleShape clickableSurfaceQuit = librairies.createClickableSurface(960 - textureQuit.getSize().x * 2.5 / 2, 700 - textureQuit.getSize().y * 2.5 / 2, textureQuit.getSize().x * 2.5, textureQuit.getSize().y * 2.5);
+
     // Boucle principale
     while (window.isOpen()) {
         sf::Event event;
@@ -56,6 +84,48 @@ Game::Game() {
         // Sinon
         else {
             window.draw(spriteStart);
+        }
+
+        // Si la souris est sur le bouton Continuer
+        if (librairies.isMouseOnSurface(clickableSurfaceContinue, window)) {
+            // Si le clic gauche est enfoncé sur le bouton Continuer
+            if (librairies.isLeftClickOnSurface(clickableSurfaceContinue, window)) {
+                window.draw(spriteContinueClicked);
+            }
+            else {
+                window.draw(spriteContinueHover);
+            }
+        }
+        else {
+            window.draw(spriteContinue);
+        }
+
+        // Si la souris est sur le bouton Options
+        if (librairies.isMouseOnSurface(clickableSurfaceOptions, window)) {
+            // Si le clic gauche est enfoncé sur le bouton Options
+            if (librairies.isLeftClickOnSurface(clickableSurfaceOptions, window)) {
+                window.draw(spriteOptionsClicked);
+            }
+            else {
+                window.draw(spriteOptionsHover);
+            }
+        }
+        else {
+            window.draw(spriteOptions);
+        }
+
+        // Si la souris est sur le bouton Quitter
+        if (librairies.isMouseOnSurface(clickableSurfaceQuit, window)) {
+            // Si le clic gauche est enfoncé sur le bouton Quitter
+            if (librairies.isLeftClickOnSurface(clickableSurfaceQuit, window)) {
+                window.draw(spriteQuitClicked);
+            }
+            else {
+                window.draw(spriteQuitHover);
+            }
+        }
+        else {
+            window.draw(spriteQuit);
         }
 
         // Afficher la fenêtre
