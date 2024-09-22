@@ -14,14 +14,18 @@ Game::Game() {
     sf::Texture textureBackground;
     sf::Sprite spriteBackground = librairies.createSprite("../assets/background/Menu_Background.png", 1920 / 2, 1080 / 2, 1, textureBackground);
 
+    // Création du l'image de fond du menu
+    sf::Texture textureMenu;
+    sf::Sprite spriteMenu = librairies.createSprite("../assets/UI/Menu.png", 960, 540, 2.5, textureMenu);
+
     // Création du Bouton Start
     sf::Texture textureStart;
-    sf::Sprite spriteStart = librairies.createSprite("../assets/button/Start.png", 960, 440, 2.5, textureStart);
+    sf::Sprite spriteStart = librairies.createSprite("../assets/button/Start.png", 960, 400, 2.5, textureStart);
     sf::Texture textureStartHover;
-    sf::Sprite spriteStartHover = librairies.createSprite("../assets/button/Start_Hover.png", 960, 440, 2.5, textureStartHover);
+    sf::Sprite spriteStartHover = librairies.createSprite("../assets/button/Start_Hover.png", 960, 400, 2.5, textureStartHover);
     sf::Texture textureStartClicked;
-    sf::Sprite spriteStartClicked = librairies.createSprite("../assets/button/Start_Pushed.png", 960, 440, 2.5, textureStartClicked);
-    sf::RectangleShape clickableSurfaceStart = librairies.createClickableSurface(960 - textureStart.getSize().x * 2.5 / 2, 440 - textureStart.getSize().y * 2.5 / 2, textureStart.getSize().x * 2.5, textureStart.getSize().y * 2.5);
+    sf::Sprite spriteStartClicked = librairies.createSprite("../assets/button/Start_Pushed.png", 960, 400, 2.5, textureStartClicked);
+    sf::RectangleShape clickableSurfaceStart = librairies.createClickableSurface(960 - textureStart.getSize().x * 2.5 / 2, 400 - textureStart.getSize().y * 2.5 / 2, textureStart.getSize().x * 2.5, textureStart.getSize().y * 2.5);
     // Boucle principale
     while (window.isOpen()) {
         sf::Event event;
@@ -35,6 +39,9 @@ Game::Game() {
 
         // Afficher l'image de fond
         window.draw(spriteBackground);
+
+        // Afficher l'image de fond du menu
+        window.draw(spriteMenu);
 
         // Si la souris est sur le bouton Start
         if (librairies.isMouseOnSurface(clickableSurfaceStart, window)) {
