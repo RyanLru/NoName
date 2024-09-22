@@ -32,10 +32,12 @@ Game::Game() {
 
         // Si la souris est sur le bouton Start
         if (librairies.isMouseOnSurface(clickableSurfaceStart, window)) {
-            window.draw(spriteStartHover);
             // Si le clic gauche est enfoncé sur le bouton Start
             if (librairies.isLeftClickOnSurface(clickableSurfaceStart, window)) {
                 window.draw(spriteStartClicked);
+            }
+            else {
+                window.draw(spriteStartHover);
             }
         }
         // Sinon
