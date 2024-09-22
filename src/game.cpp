@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 #include "librairies.h"
+#include <iostream>
 
 Game::Game() {
     // Créer une fenêtre SFML
@@ -10,7 +11,9 @@ Game::Game() {
     Librairies librairies;
 
     // Ajouter un sprite
-    sf::Sprite sprite = librairies.addSprite(400, 400, 1.0f, 1.0f, "../assets/Button.png");
+    sf::Texture texture;
+    texture.loadFromFile("../assets/Button.png");
+    sf::Sprite sprite(texture);
 
     // Boucle principale
     while (window.isOpen()) {
@@ -30,7 +33,7 @@ Game::Game() {
         window.display();
 
         // Passer en 60 FPS
-        sf::sleep(sf::milliseconds(1000 / 144));
+        sf::sleep(sf::milliseconds(1000 / 60));
     }
 
     // Fermer la fenêtre
