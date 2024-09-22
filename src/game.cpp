@@ -12,8 +12,7 @@ Game::Game() {
 
     // Ajouter un sprite
     sf::Texture texture;
-    texture.loadFromFile("../assets/Button.png");
-    sf::Sprite sprite(texture);
+    sf::Sprite sprite = librairies.createSprite("../assets/Button.png", 0, 0, 1, texture);
 
     // Boucle principale
     while (window.isOpen()) {
