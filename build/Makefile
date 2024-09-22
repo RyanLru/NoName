@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -Wall -Iinclude
 
 # Bibliothèques
-LIBS = -ljsoncpp -lsfml-graphics -lsfml-window -lsfml-system
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Fichiers source
 SRCDIR = ../src

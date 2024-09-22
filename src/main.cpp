@@ -19,6 +19,9 @@ int main() {
         window.clear();
         window.draw(shape);
         window.display();
+
+        // Passer en 60 FPS
+        sf::sleep(sf::milliseconds(1000 / 144));
     }
 
     return 0;
