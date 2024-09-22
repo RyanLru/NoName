@@ -10,6 +10,10 @@ Game::Game() {
     // Créer un objet de la classe Librairies
     Librairies librairies;
 
+    // Création de l'image de fond
+    sf::Texture textureBackground;
+    sf::Sprite spriteBackground = librairies.createSprite("../assets/background/Menu_Background.png", 1920 / 2, 1080 / 2, 1, textureBackground);
+
     // Création du Bouton Start
     sf::Texture textureStart;
     sf::Sprite spriteStart = librairies.createSprite("../assets/button/Start.png", 960, 440, 2.5, textureStart);
@@ -18,7 +22,6 @@ Game::Game() {
     sf::Texture textureStartClicked;
     sf::Sprite spriteStartClicked = librairies.createSprite("../assets/button/Start_Pushed.png", 960, 440, 2.5, textureStartClicked);
     sf::RectangleShape clickableSurfaceStart = librairies.createClickableSurface(960 - textureStart.getSize().x * 2.5 / 2, 440 - textureStart.getSize().y * 2.5 / 2, textureStart.getSize().x * 2.5, textureStart.getSize().y * 2.5);
-
     // Boucle principale
     while (window.isOpen()) {
         sf::Event event;
@@ -29,6 +32,9 @@ Game::Game() {
 
         // Effacer la fenêtre
         window.clear();
+
+        // Afficher l'image de fond
+        window.draw(spriteBackground);
 
         // Si la souris est sur le bouton Start
         if (librairies.isMouseOnSurface(clickableSurfaceStart, window)) {
