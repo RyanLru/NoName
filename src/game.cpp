@@ -27,6 +27,9 @@ Game::Game() {
     sf::Texture texturePlanet4;
     sf::Sprite spritePlanet4 = librairies.createSprite("../assets/background/MBK_Extra/Planet_C.png", 1500, 200, 7, texturePlanet4);
 
+    // Création du vaisseau pour le fond
+    sf::Texture textureShip;
+    sf::Sprite spriteShip = librairies.createSprite("../assets/Main_Ship.png", 200, 600, 3, textureShip);
 
     // Création du l'image de fond du menu
     sf::Texture textureMenu;
@@ -87,6 +90,9 @@ Game::Game() {
         window.draw(spritePlanet2);
         window.draw(spritePlanet3);
         window.draw(spritePlanet4);
+
+        // Afficher le vaisseau de fond
+        window.draw(spriteShip);
 
         // Afficher l'image de fond du menu
         window.draw(spriteMenu);
