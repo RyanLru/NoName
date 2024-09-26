@@ -14,6 +14,20 @@ Game::Game() {
     sf::Texture textureBackground;
     sf::Sprite spriteBackground = librairies.createSprite("../assets/background/Menu_Background.png", 1920 / 2, 1080 / 2, 1, textureBackground);
 
+    // Création des Planètes de fond
+    sf::Texture texturePlanet1;
+    sf::Sprite spritePlanet1 = librairies.createSprite("../assets/background/MBK_Extra/Moon.png", 400, 400, 4, texturePlanet1);
+
+    sf::Texture texturePlanet2;
+    sf::Sprite spritePlanet2 = librairies.createSprite("../assets/background/MBK_Extra/Planet_A.png", 1200, 800, 6, texturePlanet2);
+
+    sf::Texture texturePlanet3;
+    sf::Sprite spritePlanet3 = librairies.createSprite("../assets/background/MBK_Extra/Planet_B.png", 1700, 900, 17, texturePlanet3);
+
+    sf::Texture texturePlanet4;
+    sf::Sprite spritePlanet4 = librairies.createSprite("../assets/background/MBK_Extra/Planet_C.png", 1500, 200, 7, texturePlanet4);
+
+
     // Création du l'image de fond du menu
     sf::Texture textureMenu;
     sf::Sprite spriteMenu = librairies.createSprite("../assets/UI/Menu.png", 960, 570, 3, textureMenu);
@@ -67,6 +81,12 @@ Game::Game() {
 
         // Afficher l'image de fond
         window.draw(spriteBackground);
+
+        // Afficher les planètes de fond
+        window.draw(spritePlanet1);
+        window.draw(spritePlanet2);
+        window.draw(spritePlanet3);
+        window.draw(spritePlanet4);
 
         // Afficher l'image de fond du menu
         window.draw(spriteMenu);
