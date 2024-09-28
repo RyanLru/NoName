@@ -89,17 +89,58 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     sf::Texture textureBackground;
     sf::Sprite spriteBackground = librairies.createSprite("../assets/background/Menu_Background.png", 1920 / 2, 1080 / 2, 1, textureBackground);
 
+    // Chargement du Player
+    // 3 Frames pour l'animation Perso_Basique_Walk_1 -> Perso_Basique -> Perso_Basique_Walk_2
+    // Même principe pour les autres directions Perso_Basique_Left -> Perso_Basique_Left -> Perso_Basique_Left_Walk_2
+
+    // Chargement de la texture du Player
+    sf::Texture texturePlayer;
+    if (!texturePlayer.loadFromFile("../assets/Perso/Perso_Basique.png")) {
+        std::cerr << "Failed to load player texture!" << std::endl;
+        return 1;
+    }
+
+    // Création du sprite du Player
+    sf::Sprite spritePlayer;
+    spritePlayer.setTexture(texturePlayer);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+            // Si une touche est pressée
+            if (event.type == sf::Event::KeyPressed) {
+                // Si la touche flèche du haut est pressée
+                if (event.key.code == sf::Keyboard::Up) {
+                    spritePlayer.move(0, -5);
+                }
+                // Si la touche flèche du bas est pressée
+                if (event.key.code == sf::Keyboard::Down) {
+                    // Déplacement du Player vers le bas
+                    spritePlayer.move(0, 5);
+                }
+                // Si la touche flèche de gauche est pressée
+                if (event.key.code == sf::Keyboard::Left) {
+                    // Déplacement du Player vers la gauche
+                    spritePlayer.move(-5, 0);
+                }
+                // Si la touche flèche de droite est pressée
+                if (event.key.code == sf::Keyboard::Right) {
+                    // Déplacement du Player vers la droite
+                    spritePlayer.move(5, 0);
+                }
+            }
         }
 
         window.clear();
         window.draw(spriteBackground);
         draw(window);
+
+        // Affichage du Player
+        window.draw(spritePlayer);
+
         window.display();
 
         // Limiter le nombre d'images par seconde à 144
