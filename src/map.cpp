@@ -101,8 +101,7 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     }
 
     // Création du sprite du Player
-    sf::Sprite spritePlayer;
-    spritePlayer.setTexture(texturePlayer);
+    sf::Sprite spritePlayer = librairies.createSprite("../assets/Perso/Perso_Basique.png", 1920 / 2, 1080 / 2, 2, texturePlayer);
 
     while (window.isOpen()) {
         sf::Event event;
