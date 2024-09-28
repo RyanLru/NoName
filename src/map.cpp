@@ -103,6 +103,16 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     // Création du sprite du Player
     sf::Sprite spritePlayer = librairies.createSprite("../assets/Perso/Perso_Basique.png", 1920 / 2, 1080 / 2, 2, texturePlayer);
 
+    // Calculer la position de départ pour centrer la carte
+    sf::Vector2u windowSize = window.getSize();
+    sf::Vector2f mapSize(width * tileWidth, height * tileHeight);
+    sf::Vector2f mapPosition((windowSize.x - mapSize.x) / 2.0f, (windowSize.y - mapSize.y) / 2.0f);
+
+    // Appliquer la position de départ à chaque tuile
+    for (auto& tile : tiles) {
+        tile.sprite.setPosition(tile.sprite.getPosition() + mapPosition);
+    }
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -111,22 +121,22 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
             }
             // Si une touche est pressée
             if (event.type == sf::Event::KeyPressed) {
-                // Si la touche flèche du haut est pressée
-                if (event.key.code == sf::Keyboard::Up) {
+                // Si la touche Z est pressée
+                if (event.key.code == sf::Keyboard::Z) {
                     spritePlayer.move(0, -5);
                 }
-                // Si la touche flèche du bas est pressée
-                if (event.key.code == sf::Keyboard::Down) {
+                // Si la touche S est pressée
+                if (event.key.code == sf::Keyboard::S) {
                     // Déplacement du Player vers le bas
                     spritePlayer.move(0, 5);
                 }
-                // Si la touche flèche de gauche est pressée
-                if (event.key.code == sf::Keyboard::Left) {
+                // Si la touche Q est pressée
+                if (event.key.code == sf::Keyboard::Q) {
                     // Déplacement du Player vers la gauche
                     spritePlayer.move(-5, 0);
                 }
-                // Si la touche flèche de droite est pressée
-                if (event.key.code == sf::Keyboard::Right) {
+                // Si la touche D est pressée
+                if (event.key.code == sf::Keyboard::D) {
                     // Déplacement du Player vers la droite
                     spritePlayer.move(5, 0);
                 }
