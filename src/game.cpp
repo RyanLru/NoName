@@ -2,6 +2,7 @@
 #include "game.h"
 #include "librairies.h"
 #include <iostream>
+#include "map.h"
 
 Game::Game() {
     // Créer une fenêtre SFML
@@ -71,8 +72,9 @@ Game::Game() {
     sf::Sprite spriteQuitClicked = librairies.createSprite("../assets/button/Quit_Pushed.png", 960, 700, 2.5, textureQuitClicked);
     sf::RectangleShape clickableSurfaceQuit = librairies.createClickableSurface(960 - textureQuit.getSize().x * 2.5 / 2, 700 - textureQuit.getSize().y * 2.5 / 2, textureQuit.getSize().x * 2.5, textureQuit.getSize().y * 2.5);
 
+    bool isGameRunning = true;
     // Boucle principale
-    while (window.isOpen()) {
+    while (window.isOpen() || isGameRunning) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
@@ -102,6 +104,12 @@ Game::Game() {
             // Si le clic gauche est enfoncé sur le bouton Start
             if (librairies.isLeftClickOnSurface(clickableSurfaceStart, window)) {
                 window.draw(spriteStartClicked);
+
+                // Charger la map
+                MapInterface map = MapInterface("../Map/Test/Test.tmx", "../Map/Test/Tilesets.png", window);
+
+                // Arrêter la boucle principale
+                isGameRunning = false;
             }
             else {
                 window.draw(spriteStartHover);
@@ -158,9 +166,8 @@ Game::Game() {
         window.display();
 
         // Passer en 60 FPS
-        sf::sleep(sf::milliseconds(1000 / 60));
+        sf::sleep(sf::milliseconds(1000 / 144));
     }
 
-    // Fermer la fenêtre
     window.close();
 }

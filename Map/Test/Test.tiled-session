@@ -1,0 +1,40 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Test.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Test.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 108.25,
+                "y": 330.75
+            }
+        },
+        "Tilesets.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 3
+        }
+    },
+    "last.imagePath": "/home/ryanl/Bureau/Projet/NoName/Map/Test",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "Test.tmx",
+        "Tilesets.tsx"
+    ],
+    "project": "Test.tiled-project",
+    "recentFiles": [
+        "Tilesets.tsx",
+        "Test.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
+}

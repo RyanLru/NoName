@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -Wall -Iinclude
 
 # Bibliothèques
-LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system -ltinyxml2
 
 # Fichiers source
 SRCDIR = ../src
