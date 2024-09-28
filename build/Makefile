@@ -50,3 +50,8 @@ release:
 	zip -r release.zip release/
 	# Nettoyer les fichiers temporaires
 	rm -rf release
+
+# Installation des dépendances avec pacman
+install:
+	sudo pacman -S sfml tinyxml2 sfml
+
