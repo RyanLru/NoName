@@ -1,78 +1,91 @@
 #include "map.h"
 #include "librairies.h"
+#include <iostream>
+#include <sstream>
 
 MapInterface::MapInterface(const std::string& filename, const std::string& textureFilename, sf::RenderWindow& window) {
-    // Charger la texture des tuiles
-    if (!tileTexture.loadFromFile(textureFilename)) {
-        std::cerr << "Failed to load tile texture!" << std::endl;
+    if (!loadTileTexture(textureFilename) || !parseTMXFile(filename)) {
         return;
     }
 
-    // Parser le fichier TMX
+    parseLayers(mapElement);
+    std::cout << "Map loaded successfully with " << tiles.size() << " tiles." << std::endl;
+    LoadMap(window);
+}
+
+bool MapInterface::loadTileTexture(const std::string& textureFilename) {
+    if (!tileTexture.loadFromFile(textureFilename)) {
+        std::cerr << "Failed to load tile texture!" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool MapInterface::parseTMXFile(const std::string& filename) {
     tinyxml2::XMLDocument doc;
     if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
         std::cerr << "Failed to load TMX file!" << std::endl;
-        return;
+        return false;
     }
 
-    tinyxml2::XMLElement* mapElement = doc.FirstChildElement("map");
+    mapElement = doc.FirstChildElement("map");
     if (!mapElement) {
         std::cerr << "No map element found!" << std::endl;
-        return;
+        return false;
     }
 
-    // Obtenir les dimensions de la map
     mapElement->QueryIntAttribute("width", &width);
     mapElement->QueryIntAttribute("height", &height);
     mapElement->QueryIntAttribute("tilewidth", &tileWidth);
     mapElement->QueryIntAttribute("tileheight", &tileHeight);
 
-    // Parser les layers et les tuiles
+    return true;
+}
+
+void MapInterface::parseLayers(tinyxml2::XMLElement* mapElement) {
     tinyxml2::XMLElement* layerElement = mapElement->FirstChildElement("layer");
-    if (!layerElement) {
-        std::cerr << "No layer element found!" << std::endl;
+    while (layerElement) {
+        parseLayerData(layerElement->FirstChildElement("data"));
+        layerElement = layerElement->NextSiblingElement("layer");
+    }
+}
+
+void MapInterface::parseLayerData(tinyxml2::XMLElement* dataElement) {
+    if (!dataElement) {
+        std::cerr << "No data element found in layer!" << std::endl;
         return;
     }
 
-    while (layerElement) {
-        tinyxml2::XMLElement* dataElement = layerElement->FirstChildElement("data");
-        if (dataElement) {
-            const char* data = dataElement->GetText();
-            if (data) {
-                std::istringstream dataStream(data);
-                std::string line;
-                int y = 0;
-                while (std::getline(dataStream, line)) {
-                    std::istringstream lineStream(line);
-                    std::string cell;
-                    int x = 0;
-                    while (std::getline(lineStream, cell, ',')) {
-                        int gid = std::stoi(cell);
-                        if (gid > 0) {
-                            Tile tile;
-                            tile.id = gid;
-                            tile.sprite.setTexture(tileTexture);
-                            tile.sprite.setTextureRect(sf::IntRect((gid - 1) % (tileTexture.getSize().x / tileWidth) * tileWidth,
-                                                                   (gid - 1) / (tileTexture.getSize().x / tileWidth) * tileHeight,
-                                                                   tileWidth, tileHeight));
-                            tile.sprite.setPosition(x * tileWidth, y * tileHeight);
-
-                            tiles.push_back(tile);
-                        }
-                        x++;
-                    }
-                    y++;
+    const char* data = dataElement->GetText();
+    if (data) {
+        std::istringstream dataStream(data);
+        std::string line;
+        int y = 0;
+        while (std::getline(dataStream, line)) {
+            std::istringstream lineStream(line);
+            std::string cell;
+            int x = 0;
+            while (std::getline(lineStream, cell, ',')) {
+                int gid = std::stoi(cell);
+                if (gid > 0) {
+                    addTile(gid, x, y);
                 }
+                x++;
             }
-        } else {
-            std::cerr << "No data element found in layer!" << std::endl;
+            y++;
         }
-        layerElement = layerElement->NextSiblingElement("layer");
     }
+}
 
-    std::cout << "Map loaded successfully with " << tiles.size() << " tiles." << std::endl;
-    // Charger la map
-    LoadMap(window);
+void MapInterface::addTile(int gid, int x, int y) {
+    Tile tile;
+    tile.id = gid;
+    tile.sprite.setTexture(tileTexture);
+    tile.sprite.setTextureRect(sf::IntRect((gid - 1) % (tileTexture.getSize().x / tileWidth) * tileWidth,
+                                           (gid - 1) / (tileTexture.getSize().x / tileWidth) * tileHeight,
+                                           tileWidth, tileHeight));
+    tile.sprite.setPosition(x * tileWidth, y * tileHeight);
+    tiles.push_back(tile);
 }
 
 void MapInterface::draw(sf::RenderWindow& window) {
@@ -82,33 +95,23 @@ void MapInterface::draw(sf::RenderWindow& window) {
 }
 
 int MapInterface::LoadMap(sf::RenderWindow& window) {
-    // Librairies
     Librairies librairies;
 
-    // Affiche un background
     sf::Texture textureBackground;
     sf::Sprite spriteBackground = librairies.createSprite("../assets/background/Menu_Background.png", 1920 / 2, 1080 / 2, 1, textureBackground);
 
-    // Chargement du Player
-    // 3 Frames pour l'animation Perso_Basique_Walk_1 -> Perso_Basique -> Perso_Basique_Walk_2
-    // Même principe pour les autres directions Perso_Basique_Left -> Perso_Basique_Left -> Perso_Basique_Left_Walk_2
-
-    // Chargement de la texture du Player
     sf::Texture texturePlayer;
     if (!texturePlayer.loadFromFile("../assets/Perso/Perso_Basique.png")) {
         std::cerr << "Failed to load player texture!" << std::endl;
         return 1;
     }
 
-    // Création du sprite du Player
     sf::Sprite spritePlayer = librairies.createSprite("../assets/Perso/Perso_Basique.png", 1920 / 2, 1080 / 2, 2, texturePlayer);
 
-    // Calculer la position de départ pour centrer la carte
     sf::Vector2u windowSize = window.getSize();
     sf::Vector2f mapSize(width * tileWidth, height * tileHeight);
     sf::Vector2f mapPosition((windowSize.x - mapSize.x) / 2.0f, (windowSize.y - mapSize.y) / 2.0f);
 
-    // Appliquer la position de départ à chaque tuile
     for (auto& tile : tiles) {
         tile.sprite.setPosition(tile.sprite.getPosition() + mapPosition);
     }
@@ -119,42 +122,31 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            // Si une touche est pressée
-            if (event.type == sf::Event::KeyPressed) {
-                // Si la touche Z est pressée
-                if (event.key.code == sf::Keyboard::Z) {
-                    spritePlayer.move(0, -5);
-                }
-                // Si la touche S est pressée
-                if (event.key.code == sf::Keyboard::S) {
-                    // Déplacement du Player vers le bas
-                    spritePlayer.move(0, 5);
-                }
-                // Si la touche Q est pressée
-                if (event.key.code == sf::Keyboard::Q) {
-                    // Déplacement du Player vers la gauche
-                    spritePlayer.move(-5, 0);
-                }
-                // Si la touche D est pressée
-                if (event.key.code == sf::Keyboard::D) {
-                    // Déplacement du Player vers la droite
-                    spritePlayer.move(5, 0);
-                }
-            }
+            handlePlayerMovement(event, spritePlayer);
         }
 
         window.clear();
         window.draw(spriteBackground);
         draw(window);
-
-        // Affichage du Player
         window.draw(spritePlayer);
-
         window.display();
 
-        // Limiter le nombre d'images par seconde à 144
         sf::sleep(sf::milliseconds(1000 / 144));
     }
 
     return 0;
+}
+
+void MapInterface::handlePlayerMovement(const sf::Event& event, sf::Sprite& spritePlayer) {
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Z) {
+            spritePlayer.move(0, -5);
+        } else if (event.key.code == sf::Keyboard::S) {
+            spritePlayer.move(0, 5);
+        } else if (event.key.code == sf::Keyboard::Q) {
+            spritePlayer.move(-5, 0);
+        } else if (event.key.code == sf::Keyboard::D) {
+            spritePlayer.move(5, 0);
+        }
+    }
 }
