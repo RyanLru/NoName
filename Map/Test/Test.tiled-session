@@ -3,17 +3,32 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Test.tmx",
+    "activeFile": "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx",
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
-        "Test.tmx": {
-            "scale": 2,
+        "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx": {
+            "scale": 1.0845833333333332,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 316.5,
-                "y": 308.25
+                "x": 32.270457164809834,
+                "y": 320.3995389934691
+            }
+        },
+        "/home/ryanl/Bureau/Projet/NoName/Map/Tileset_Floor1.tsx": {
+            "scaleInDock": 1
+        },
+        "Test.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 2,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 297.5,
+                "y": 304.75
             }
         },
         "Tilesets.tsx": {
@@ -25,12 +40,14 @@
     "map.lastUsedFormat": "tmx",
     "openFiles": [
         "Test.tmx",
-        "Tilesets.tsx"
+        "Tilesets.tsx",
+        "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx"
     ],
     "project": "Test.tiled-project",
     "recentFiles": [
+        "Test.tmx",
         "Tilesets.tsx",
-        "Test.tmx"
+        "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

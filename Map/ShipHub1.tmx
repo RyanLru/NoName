@@ -25,7 +25,7 @@
 50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50
 </data>
  </layer>
- <objectgroup id="2" name="Object Layer 1">
+ <objectgroup id="2" name="Collides">
   <object id="5" type="Wall" x="0.5" y="0.5" width="959" height="37.5"/>
   <object id="6" type="Wall" x="0.5" y="39.5" width="30" height="539.5"/>
   <object id="7" type="Wall" x="0.5" y="576" width="958.5" height="64"/>
