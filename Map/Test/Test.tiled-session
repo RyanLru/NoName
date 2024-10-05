@@ -3,12 +3,14 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx",
+    "activeFile": "Test.tmx",
     "expandedProjectPaths": [
         "."
     ],
-    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx": {
             "scale": 1.0845833333333332,
             "selectedLayer": 1,
@@ -25,15 +27,17 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Ship.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Test.tmx": {
-            "expandedObjectLayers": [
-                2
-            ],
-            "scale": 2,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 480,
-                "y": 319.75
+                "x": 1410.6666666666665,
+                "y": 487.33333333333326
             }
         },
         "Tilesets.tsx": {
@@ -41,23 +45,24 @@
             "scaleInEditor": 3
         }
     },
-    "last.imagePath": "/home/ryanl/Bureau/Projet/NoName/Map/Test",
+    "last.externalTilesetPath": "/home/ryanl/Bureau/Projet/NoName/Map/Test",
+    "last.imagePath": "/home/ryanl/Bureau/Projet/NoName/assets/Tileset",
+    "map.height": 34,
     "map.lastUsedFormat": "tmx",
+    "map.width": 60,
     "openFiles": [
-        "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx",
-        "/home/ryanl/Bureau/Projet/NoName/Map/Tileset_Floor1.tsx"
+        "Test.tmx",
+        "Ship.tsx"
     ],
     "project": "Test.tiled-project",
     "recentFiles": [
+        "Ship.tsx",
+        "Test.tmx",
         "/home/ryanl/Bureau/Projet/NoName/Map/Tileset_Floor1.tsx",
         "/home/ryanl/Bureau/Projet/NoName/Map/ShipHub1.tmx",
         "/home/ryanl/Bureau/Projet/NoName/Map/Tilesets.tsx",
-        "Test.tmx",
         "Tilesets.tsx"
     ],
-    "tileset.lastUsedFormat": "tsx",
-    "tileset.tileSize": {
-        "height": 32,
-        "width": 32
-    }
+    "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx"
 }

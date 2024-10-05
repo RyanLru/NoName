@@ -25,6 +25,8 @@ private:
     std::vector<Tile> tiles;
     int width, height, tileWidth, tileHeight;
     std::vector<sf::FloatRect> collides;
+    sf::Vector2f playerPosition;
+    float playerSpeed = 200.0f; // Vitesse du joueur en pixels par seconde
 };
 
 #endif // MAP_H

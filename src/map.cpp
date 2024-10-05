@@ -56,7 +56,7 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
                                 tile.sprite.setTextureRect(sf::IntRect((gid - 1) % (tileTexture.getSize().x / tileWidth) * tileWidth,
                                                                        (gid - 1) / (tileTexture.getSize().x / tileWidth) * tileHeight,
                                                                        tileWidth, tileHeight));
-                                tile.sprite.setPosition(x * tileWidth, y * tileHeight);
+                                tile.sprite.setPosition(x * tileWidth + 10, y * tileHeight-5);
 
                                 tiles.push_back(tile);
                             }
@@ -102,12 +102,13 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
     }
 
     std::cout << "Map loaded successfully with " << tiles.size() << " tiles." << std::endl;
+
     // Charger la map
     LoadMap(window);
 }
 
 void MapInterface::draw(sf::RenderWindow& window) {
-    for (const auto& tile : tiles) {
+    for (auto& tile : tiles) {
         window.draw(tile.sprite);
     }
 }
@@ -144,51 +145,66 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
         tile.sprite.setPosition(tile.sprite.getPosition() + mapPosition);
     }
 
+    // Position initiale du joueur
+    playerPosition = sf::Vector2f(1920 / 2, 1080 / 2);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            // Si une touche est pressée
-            if (event.type == sf::Event::KeyPressed) {
-                // Si la touche Z est pressée
-                if (event.key.code == sf::Keyboard::Z) {
-                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(0, -5))) {
-                        // Déplacement du Player vers le haut
-                        spritePlayer.move(0, -5);
-                    }
-                }
-                // Si la touche S est pressée
-                if (event.key.code == sf::Keyboard::S) {
-                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(0, 5))) {
-                        // Déplacement du Player vers le bas
-                        spritePlayer.move(0, 5);
-                    }
-                }
-                // Si la touche Q est pressée
-                if (event.key.code == sf::Keyboard::Q) {
-                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(-5, 0))) {
-                        // Déplacement du Player vers la gauche
-                        spritePlayer.move(-5, 0);
-                    }
-                }
-                // Si la touche D est pressée
-                if (event.key.code == sf::Keyboard::D) {
-                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(5, 0))) {
-                        // Déplacement du Player vers la droite
-                        spritePlayer.move(5, 0);
-                    }
-                }
-            }
         }
+
+        // Gestion des mouvements du joueur
+        sf::Vector2f move(0.0f, 0.0f);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+            move.y -= playerSpeed;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            move.y += playerSpeed;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+            move.x -= playerSpeed;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            move.x += playerSpeed;
+        }
+
+        // Normaliser le vecteur de mouvement pour éviter les mouvements diagonaux plus rapides
+        if (move.x != 0.0f && move.y != 0.0f) {
+            move *= 0.7071f; // sqrt(2) / 2
+        }
+
+        // Calculer la nouvelle position du joueur
+        sf::Vector2f newPosition = playerPosition + move * (1.0f / 144.0f); // 144 FPS
+
+        // Vérifier les collisions
+        sf::FloatRect playerBounds = spritePlayer.getGlobalBounds();
+        playerBounds.left = newPosition.x;
+        playerBounds.top = newPosition.y;
+
+        if (!isNextMovePossible(playerBounds, move * (1.0f / 144.0f))) {
+            playerPosition = newPosition;
+        }
+
+        // Mettre à jour la position du sprite du joueur
+        spritePlayer.setPosition(playerPosition);
 
         window.clear();
         window.draw(spriteBackground);
         draw(window);
-
-        // Affichage du Player
         window.draw(spritePlayer);
+
+        // Dessiner les rectangles de collision
+        for (const auto& collide : collides) {
+            sf::RectangleShape rect;
+            rect.setSize(sf::Vector2f(collide.width, collide.height));
+            rect.setPosition(collide.left, collide.top);
+            rect.setFillColor(sf::Color(255, 0, 0, 128));
+            window.draw(rect);
+        }
+        
 
         window.display();
 
@@ -199,19 +215,17 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     return 0;
 }
 
-// Fonction pour gérer les collisions
 bool MapInterface::isCollide(sf::FloatRect player) {
     for (const auto& collide : collides) {
-        if (collide.intersects(player)) {
+        if (player.intersects(collide)) {
             return true;
         }
     }
     return false;
 }
 
-// Fonction pour vérifier si le prochain déplacement est possible
 bool MapInterface::isNextMovePossible(sf::FloatRect player, sf::Vector2f move) {
     player.left += move.x;
     player.top += move.y;
-    return !isCollide(player);
+    return isCollide(player);
 }
