@@ -106,7 +106,7 @@ Game::Game() {
                 window.draw(spriteStartClicked);
 
                 // Charger la map
-                MapInterface map = MapInterface("../Map/Test/Test.tmx", "../Map/Test/Tilesets.png", window);
+                MapInterface map = MapInterface("../Map/ShipHub1.tmx", "../Map/Tileset_Floor1.png", window);
 
                 // Arrêter la boucle principale
                 isGameRunning = false;
