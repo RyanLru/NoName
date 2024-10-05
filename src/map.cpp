@@ -1,6 +1,7 @@
 #include "map.h"
 #include "librairies.h"
 
+
 MapInterface::MapInterface(const std::string& filename, const std::string& textureFilename, sf::RenderWindow& window) {
     // Charger la texture des tuiles
     if (!tileTexture.loadFromFile(textureFilename)) {
@@ -47,17 +48,23 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
                     std::string cell;
                     int x = 0;
                     while (std::getline(lineStream, cell, ',')) {
-                        int gid = std::stoi(cell);
-                        if (gid > 0) {
-                            Tile tile;
-                            tile.id = gid;
-                            tile.sprite.setTexture(tileTexture);
-                            tile.sprite.setTextureRect(sf::IntRect((gid - 1) % (tileTexture.getSize().x / tileWidth) * tileWidth,
-                                                                   (gid - 1) / (tileTexture.getSize().x / tileWidth) * tileHeight,
-                                                                   tileWidth, tileHeight));
-                            tile.sprite.setPosition(x * tileWidth, y * tileHeight);
+                        try {
+                            int gid = std::stoi(cell);
+                            if (gid > 0) {
+                                Tile tile;
+                                tile.id = gid;
+                                tile.sprite.setTexture(tileTexture);
+                                tile.sprite.setTextureRect(sf::IntRect((gid - 1) % (tileTexture.getSize().x / tileWidth) * tileWidth,
+                                                                       (gid - 1) / (tileTexture.getSize().x / tileWidth) * tileHeight,
+                                                                       tileWidth, tileHeight));
+                                tile.sprite.setPosition(x * tileWidth, y * tileHeight);
 
-                            tiles.push_back(tile);
+                                tiles.push_back(tile);
+                            }
+                        } catch (const std::out_of_range& e) {
+                            std::cerr << "Out of range error: " << e.what() << " for cell: " << cell << std::endl;
+                        } catch (const std::invalid_argument& e) {
+                            std::cerr << "Invalid argument error: " << e.what() << " for cell: " << cell << std::endl;
                         }
                         x++;
                     }
