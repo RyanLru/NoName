@@ -1,7 +1,6 @@
 #include "map.h"
 #include "librairies.h"
 
-
 MapInterface::MapInterface(const std::string& filename, const std::string& textureFilename, sf::RenderWindow& window) {
     // Charger la texture des tuiles
     if (!tileTexture.loadFromFile(textureFilename)) {
@@ -77,6 +76,31 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
         layerElement = layerElement->NextSiblingElement("layer");
     }
 
+    // Chargement du group d'objet nommé "Collides"
+    // On stocke les objets dans un vecteur de sf::FloatRect
+    tinyxml2::XMLElement* objectGroupElement = mapElement->FirstChildElement("objectgroup");
+    if (!objectGroupElement) {
+        std::cerr << "No object group element found!" << std::endl;
+        return;
+    }
+
+    while (objectGroupElement) {
+        const char* name = objectGroupElement->Attribute("name");
+        if (name && std::string(name) == "Collides") {
+            tinyxml2::XMLElement* objectElement = objectGroupElement->FirstChildElement("object");
+            while (objectElement) {
+                float x, y, width, height;
+                objectElement->QueryFloatAttribute("x", &x);
+                objectElement->QueryFloatAttribute("y", &y);
+                objectElement->QueryFloatAttribute("width", &width);
+                objectElement->QueryFloatAttribute("height", &height);
+                collides.push_back(sf::FloatRect(x, y, width, height));
+                objectElement = objectElement->NextSiblingElement("object");
+            }
+        }
+        objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
+    }
+
     std::cout << "Map loaded successfully with " << tiles.size() << " tiles." << std::endl;
     // Charger la map
     LoadMap(window);
@@ -130,22 +154,31 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
             if (event.type == sf::Event::KeyPressed) {
                 // Si la touche Z est pressée
                 if (event.key.code == sf::Keyboard::Z) {
-                    spritePlayer.move(0, -5);
+                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(0, -5))) {
+                        // Déplacement du Player vers le haut
+                        spritePlayer.move(0, -5);
+                    }
                 }
                 // Si la touche S est pressée
                 if (event.key.code == sf::Keyboard::S) {
-                    // Déplacement du Player vers le bas
-                    spritePlayer.move(0, 5);
+                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(0, 5))) {
+                        // Déplacement du Player vers le bas
+                        spritePlayer.move(0, 5);
+                    }
                 }
                 // Si la touche Q est pressée
                 if (event.key.code == sf::Keyboard::Q) {
-                    // Déplacement du Player vers la gauche
-                    spritePlayer.move(-5, 0);
+                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(-5, 0))) {
+                        // Déplacement du Player vers la gauche
+                        spritePlayer.move(-5, 0);
+                    }
                 }
                 // Si la touche D est pressée
                 if (event.key.code == sf::Keyboard::D) {
-                    // Déplacement du Player vers la droite
-                    spritePlayer.move(5, 0);
+                    if (isNextMovePossible(spritePlayer.getGlobalBounds(), sf::Vector2f(5, 0))) {
+                        // Déplacement du Player vers la droite
+                        spritePlayer.move(5, 0);
+                    }
                 }
             }
         }
@@ -164,4 +197,21 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     }
 
     return 0;
+}
+
+// Fonction pour gérer les collisions
+bool MapInterface::isCollide(sf::FloatRect player) {
+    for (const auto& collide : collides) {
+        if (collide.intersects(player)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Fonction pour vérifier si le prochain déplacement est possible
+bool MapInterface::isNextMovePossible(sf::FloatRect player, sf::Vector2f move) {
+    player.left += move.x;
+    player.top += move.y;
+    return !isCollide(player);
 }

@@ -17,11 +17,14 @@ public:
     MapInterface(const std::string& filename, const std::string& textureFilename, sf::RenderWindow& window);
     void draw(sf::RenderWindow& window);
     int LoadMap(sf::RenderWindow& window);
+    bool isCollide(sf::FloatRect player);
+    bool isNextMovePossible(sf::FloatRect player, sf::Vector2f move);
 
 private:
     sf::Texture tileTexture;
     std::vector<Tile> tiles;
     int width, height, tileWidth, tileHeight;
+    std::vector<sf::FloatRect> collides;
 };
 
 #endif // MAP_H
