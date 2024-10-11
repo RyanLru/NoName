@@ -56,7 +56,7 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
                                 tile.sprite.setTextureRect(sf::IntRect((gid - 1) % (tileTexture.getSize().x / tileWidth) * tileWidth,
                                                                        (gid - 1) / (tileTexture.getSize().x / tileWidth) * tileHeight,
                                                                        tileWidth, tileHeight));
-                                tile.sprite.setPosition(x * tileWidth + 15, y * tileHeight-5);
+                                tile.sprite.setPosition(x * tileWidth, y * tileHeight);
 
                                 tiles.push_back(tile);
                             }
@@ -138,7 +138,10 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     // Calculer la position de départ pour centrer la carte
     sf::Vector2u windowSize = window.getSize();
     sf::Vector2f mapSize(width * tileWidth, height * tileHeight);
-    sf::Vector2f mapPosition((windowSize.x - mapSize.x) / 2.0f, (windowSize.y - mapSize.y) / 2.0f);
+
+    float tileOffsetY = tileHeight * 0.95f;
+
+    sf::Vector2f mapPosition((windowSize.x - mapSize.x) / 2.0f, (windowSize.y - mapSize.y) / 2.0f - tileOffsetY);
 
     // Appliquer la position de départ à chaque tuile
     for (auto& tile : tiles) {
