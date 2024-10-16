@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="10">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="40">
  <tileset firstgid="1" source="Ship.tsx"/>
  <layer id="1" name="Calque de Tuiles 1" width="60" height="34">
   <data encoding="csv">
@@ -78,9 +78,69 @@
 </data>
  </layer>
  <objectgroup id="4" name="Collides">
-  <object id="4" x="2.59992" y="2.59992" width="25.9992" height="1051.67"/>
-  <object id="7" x="28.5991" y="2.59992" width="1891.44" height="27.2991"/>
-  <object id="8" x="1888.84" y="32.499" width="29.899" height="1021.77"/>
-  <object id="9" x="31.199" y="1025.67" width="1855.04" height="27.2991"/>
+  <object id="4" x="130.905" y="288.37" width="25.9992" height="509.291"/>
+  <object id="7" x="771.212" y="33.7041" width="730.865" height="60.3473"/>
+  <object id="8" x="1888.84" y="298.829" width="29.899" height="492.999"/>
+  <object id="9" x="767.98" y="994.566" width="735.289" height="56.4593"/>
+  <object id="10" x="1827.37" y="227.449">
+   <polygon points="-1.14916,-1.53221 89.4246,91.3686 59.4983,122.856 -2.32707,62.1509"/>
+  </object>
+  <object id="11" x="1500.78" y="97.2006">
+   <polygon points="0,0 1.94401,124.417 -27.2162,95.2566 -27.5531,-3.73552"/>
+  </object>
+  <object id="12" x="1536.81" y="161.649">
+   <polygon points="0,0 -0.766107,93.4651 30.6443,126.025 30.2612,28.729"/>
+  </object>
+  <object id="13" x="1568.22" y="224.853" width="255.88" height="62.8208"/>
+  <object id="14" x="1503.87" y="161.649" width="32.1765" height="62.8208"/>
+  <object id="15" x="736.229" y="160.883" width="32.1765" height="62.8208"/>
+  <object id="16" x="543.936" y="225.236" width="159.35" height="63.5869"/>
+  <object id="17" x="352.792" y="257.795" width="159.733" height="62.0547"/>
+  <object id="18" x="159.733" y="288.822" width="159.35" height="63.2039"/>
+  <object id="19" x="159.733" y="735.846" width="160.116" height="63.2039"/>
+  <object id="20" x="352.792" y="768.789" width="159.35" height="62.4378"/>
+  <object id="21" x="545.085" y="800.965" width="159.35" height="62.4378"/>
+  <object id="22" x="705.585" y="830.46" width="29.4951" height="33.7087"/>
+  <object id="23" x="736.229" y="865.318" width="32.5596" height="62.8208"/>
+  <object id="24" x="769.938" y="895.197" width="29.8782" height="98.0617"/>
+  <object id="25" x="1473.22" y="896.346" width="29.8782" height="97.6787"/>
+  <object id="26" x="1504.63" y="865.318" width="31.7935" height="62.8208"/>
+  <object id="27" x="1567.46" y="800.582" width="256.263" height="62.8208"/>
+  <object id="28" x="799.816" y="95.7634">
+   <polygon points="0,0 0,96.1465 -31.0274,127.557 -31.0274,-1.91527"/>
+  </object>
+  <object id="29" x="735.463" y="161.266">
+   <polygon points="0,0 0.383054,94.9973 -31.4104,126.791 -31.0274,31.0274"/>
+  </object>
+  <object id="30" x="543.553" y="224.469">
+   <polygon points="0,0 0,63.5869 -31.0274,94.6143 -30.6443,30.6443"/>
+  </object>
+  <object id="31" x="352.026" y="256.263">
+   <polygon points="0,0 0,64.353 -32.5596,95.7634 -33.3257,31.7935"/>
+  </object>
+  <object id="32" x="319.85" y="736.612">
+   <polygon points="0,0 32.5596,31.7935 32.1765,94.9973 0,62.8208"/>
+  </object>
+  <object id="33" x="512.909" y="769.555">
+   <polygon points="0,0 31.7935,32.1765 31.4104,93.0821 -0.766107,61.2886"/>
+  </object>
+  <object id="34" x="705.202" y="802.114">
+   <polygon points="0,0 28.346,27.5799 -0.766107,28.729"/>
+  </object>
+  <object id="35" x="704.053" y="864.169">
+   <polygon points="0,0 0,31.4104 30.6443,62.8208 31.7935,1.14916"/>
+  </object>
+  <object id="36" x="769.172" y="865.318">
+   <polygon points="0,0 29.8782,29.8782 0.383054,29.1121"/>
+  </object>
+  <object id="37" x="1503.87" y="866.084">
+   <polygon points="0,0 0.383054,29.8782 -31.0274,30.2612"/>
+  </object>
+  <object id="38" x="1567.07" y="802.114">
+   <polygon points="0,0 0,93.8482 -29.8782,124.876 -29.4951,29.4951"/>
+  </object>
+  <object id="39" x="1888.07" y="738.144">
+   <polygon points="0,0 0.383054,61.2886 -63.97,126.025 -63.5869,61.2886"/>
+  </object>
  </objectgroup>
 </map>
