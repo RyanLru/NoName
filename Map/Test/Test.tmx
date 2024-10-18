@@ -79,24 +79,24 @@
  </layer>
  <objectgroup id="4" name="Collides">
   <object id="4" type="rectangle" x="130.905" y="288.37" width="25.9992" height="509.291"/>
-  <object id="7" type="rectangle" x="771.212" y="33.7041" width="730.865" height="60.3473"/>
+  <object id="7" type="rectangle" x="771.212" y="33.7041" width="730.865" height="40.6013"/>
   <object id="8" type="rectangle" x="1888.84" y="298.829" width="29.899" height="492.999"/>
   <object id="9" type="rectangle" x="767.98" y="994.566" width="735.289" height="56.4593"/>
-  <object id="10" type="poly" x="1827.37" y="227.449">
-   <polygon points="-1.14916,-1.53221 89.4246,91.3686 59.4983,122.856 -2.32707,62.1509"/>
+  <object id="10" type="poly" x="1826.62" y="208.019">
+   <polygon points="-1.15886,-1.46067 90.1793,87.1026 60.0004,117.12 -2.34671,59.2491"/>
   </object>
-  <object id="11" type="poly" x="1500.78" y="97.2006">
-   <polygon points="0,0 1.94401,124.417 -27.2162,95.2566 -27.5531,-3.73552"/>
+  <object id="11" type="poly" x="1500.78" y="73.9474">
+   <polygon points="0,0 1.94401,123.665 -27.2162,94.681 -27.5531,-3.71295"/>
   </object>
-  <object id="12" type="poly" x="1536.81" y="161.649">
-   <polygon points="0,0 -0.766107,93.4651 30.6443,126.025 30.2612,28.729"/>
+  <object id="12" type="poly" x="1536.79" y="161.649">
+   <polygon points="0,0 -0.74722,77.0978 29.8888,103.956 29.5152,23.6981"/>
   </object>
-  <object id="13" type="rectangle" x="1568.22" y="224.853" width="255.88" height="62.8208"/>
-  <object id="14" type="rectangle" x="1503.87" y="161.649" width="32.1765" height="62.8208"/>
-  <object id="15" type="rectangle" x="736.229" y="160.883" width="32.1765" height="62.8208"/>
-  <object id="16" type="rectangle" x="543.936" y="225.236" width="159.35" height="63.5869"/>
-  <object id="17" type="rectangle" x="352.792" y="257.795" width="159.733" height="62.0547"/>
-  <object id="18" type="rectangle" x="159.733" y="288.822" width="159.35" height="63.2039"/>
+  <object id="13" type="rectangle" x="1568.22" y="224.853" width="255.88" height="43.8491"/>
+  <object id="14" type="rectangle" x="1504.26" y="160.1" width="32.1765" height="42.3004"/>
+  <object id="15" type="rectangle" x="736.229" y="160.883" width="32.1765" height="40.3646"/>
+  <object id="16" type="rectangle" x="543.936" y="225.236" width="159.35" height="41.5178"/>
+  <object id="17" type="rectangle" x="352.792" y="257.795" width="159.733" height="34.9523"/>
+  <object id="18" type="rectangle" x="159.733" y="288.822" width="159.35" height="40.7477"/>
   <object id="19" type="rectangle" x="159.733" y="735.846" width="160.116" height="63.2039"/>
   <object id="20" type="rectangle" x="352.792" y="768.789" width="159.35" height="62.4378"/>
   <object id="21" type="rectangle" x="545.085" y="800.965" width="159.35" height="62.4378"/>
@@ -106,17 +106,17 @@
   <object id="25" type="rectangle" x="1473.22" y="896.346" width="29.8782" height="97.6787"/>
   <object id="26" type="rectangle" x="1504.63" y="865.318" width="31.7935" height="62.8208"/>
   <object id="27" type="rectangle" x="1567.46" y="800.582" width="256.263" height="62.8208"/>
-  <object id="28" type="poly" x="799.816" y="95.7634">
-   <polygon points="0,0 0,96.1465 -31.0274,127.557 -31.0274,-1.91527"/>
+  <object id="28" type="poly" x="799.816" y="75.5787">
+   <polygon points="0,0 0,93.5588 -31.0274,124.124 -31.0274,-1.86372"/>
   </object>
-  <object id="29" type="poly" x="735.463" y="161.266">
-   <polygon points="0,0 0.383054,94.9973 -31.4104,126.791 -31.0274,31.0274"/>
+  <object id="29" type="poly" x="735.714" y="148.432">
+   <polygon points="0,0 0.389239,86.6149 -31.9176,115.603 -31.5284,28.2896"/>
   </object>
-  <object id="30" type="poly" x="543.553" y="224.469">
-   <polygon points="0,0 0,63.5869 -31.0274,94.6143 -30.6443,30.6443"/>
+  <object id="30" type="poly" x="543.553" y="216.725">
+   <polygon points="0,0 0,50.0561 -31.0274,74.4811 -30.6443,24.1234"/>
   </object>
-  <object id="31" type="poly" x="352.026" y="256.263">
-   <polygon points="0,0 0,64.353 -32.5596,95.7634 -33.3257,31.7935"/>
+  <object id="31" type="poly" x="352.026" y="241.163">
+   <polygon points="0,0 0,57.8484 -32.5596,86.084 -33.3257,28.5799"/>
   </object>
   <object id="32" type="poly" x="319.85" y="736.612">
    <polygon points="0,0 32.5596,31.7935 32.1765,94.9973 0,62.8208"/>
