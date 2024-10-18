@@ -88,14 +88,51 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
         const char* name = objectGroupElement->Attribute("name");
         if (name && std::string(name) == "Collides") {
             tinyxml2::XMLElement* objectElement = objectGroupElement->FirstChildElement("object");
+            
             while (objectElement) {
-                float x, y, width, height;
-                objectElement->QueryFloatAttribute("x", &x);
-                objectElement->QueryFloatAttribute("y", &y);
-                objectElement->QueryFloatAttribute("width", &width);
-                objectElement->QueryFloatAttribute("height", &height);
-                collides.push_back(sf::FloatRect(x, y, width, height));
-                objectElement = objectElement->NextSiblingElement("object");
+                const char* type = objectElement->Attribute("type");
+                if (type && std::string(type) == "rectangle") {
+                    float x, y, width, height;
+                    objectElement->QueryFloatAttribute("x", &x);
+                    objectElement->QueryFloatAttribute("y", &y);
+                    objectElement->QueryFloatAttribute("width", &width);
+                    objectElement->QueryFloatAttribute("height", &height);
+                    collides.push_back(sf::FloatRect(x, y, width, height));
+                    objectElement = objectElement->NextSiblingElement("object");
+                    std::cout << "Rectangle: Position (" << x << ", " << y << "), Size (" << width << ", " << height << ")\n";
+                }
+                if (type && std::string(type) == "poly"){
+                    float x, y;
+                    objectElement->QueryFloatAttribute("x", &x);
+                    objectElement->QueryFloatAttribute("y", &y);
+                    tinyxml2::XMLElement* polyElement = objectElement->FirstChildElement("polygon");
+                    if (polyElement) {
+                    const char* points = polyElement->Attribute("points");
+                    if (points) {
+                        std::vector<sf::Vector2f> polygonPoints;
+                        std::stringstream ss(points);
+                        std::string pointPair;
+                        
+                        // Parse the points and convert to sf::Vector2f
+                        while (std::getline(ss, pointPair, ' ')) {
+                            float px, py;
+                            sscanf(pointPair.c_str(), "%f,%f", &px, &py);
+                            polygonPoints.push_back(sf::Vector2f(x + px, y + py));
+                        }
+
+                        std::cout << "Polygon points for object at (" << x << ", " << y << "):\n";
+                        for (const auto& point : polygonPoints) {
+                            std::cout << "Point: (" << point.x << ", " << point.y << ")\n";
+                        }
+                        
+                            // Now polygonPoints contains all the points of the polygon relative to (x, y)
+                            collidesPoly.push_back(polygonPoints);
+                        }
+                    }
+                    
+
+                    objectElement = objectElement->NextSiblingElement("object");
+                }
             }
         }
         objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
@@ -207,6 +244,20 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
             rect.setFillColor(sf::Color(255, 0, 0, 128));
             window.draw(rect);
         }
+        // Draw collision polygons
+    for (const auto& polygon : collidesPoly) {
+        sf::ConvexShape convex;
+        convex.setPointCount(polygon.size()); // Set the number of points
+
+        // Set each point of the polygon
+        for (size_t i = 0; i < polygon.size(); ++i) {
+            convex.setPoint(i, polygon[i]);
+        }
+
+        // Set position and color
+        convex.setFillColor(sf::Color(0, 255, 0, 128)); // Semi-transparent green
+        window.draw(convex);
+    }
         
 
         window.display();
@@ -218,12 +269,54 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     return 0;
 }
 
+// Function to check if the player is colliding with a polygon
+bool MapInterface::isPlayerCollidingWithPolygon(sf::FloatRect player, const std::vector<sf::Vector2f>& polygon) {
+    // Check if any corner of the player's bounding box is inside the polygon
+    std::vector<sf::Vector2f> playerCorners = {
+        sf::Vector2f(player.left, player.top),
+        sf::Vector2f(player.left + player.width, player.top),
+        sf::Vector2f(player.left, player.top + player.height),
+        sf::Vector2f(player.left + player.width, player.top + player.height)
+    };
+
+    for (const auto& corner : playerCorners) {
+        if (isPointInPolygon(corner, polygon)) {
+            return true;
+        }
+    }
+
+    // Optionally, check if the polygon intersects with the player's bounding box (advanced)
+    // This would require more advanced collision detection between shapes.
+    return false;
+}
+
+// Helper function: Point-in-polygon test (Ray-casting algorithm)
+bool MapInterface::isPointInPolygon(const sf::Vector2f& point, const std::vector<sf::Vector2f>& polygon) {
+    bool inside = false;
+    for (size_t i = 0, j = polygon.size() - 1; i < polygon.size(); j = i++) {
+        if (((polygon[i].y > point.y) != (polygon[j].y > point.y)) &&
+            (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
+            inside = !inside;
+        }
+    }
+    return inside;
+}
+
 bool MapInterface::isCollide(sf::FloatRect player) {
+    // Check collision with rectangles
     for (const auto& collide : collides) {
         if (player.intersects(collide)) {
             return true;
         }
     }
+
+    // Check collision with polygons
+    for (const auto& polygon : collidesPoly) {
+        if (isPlayerCollidingWithPolygon(player, polygon)) {
+            return true;
+        }
+    }
+
     return false;
 }
 
@@ -232,3 +325,5 @@ bool MapInterface::isNextMovePossible(sf::FloatRect player, sf::Vector2f move) {
     player.top += move.y;
     return isCollide(player);
 }
+
+
