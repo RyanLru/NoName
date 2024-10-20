@@ -34,10 +34,10 @@
         },
         "Test.tmx": {
             "scale": 0.75,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1410.6666666666665,
-                "y": 487.33333333333326
+                "x": 1817.3333333333333,
+                "y": 611.3333333333333
             }
         },
         "Tilesets.tsx": {

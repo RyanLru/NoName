@@ -99,7 +99,7 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
                     objectElement->QueryFloatAttribute("height", &height);
                     collides.push_back(sf::FloatRect(x, y, width, height));
                     objectElement = objectElement->NextSiblingElement("object");
-                    std::cout << "Rectangle: Position (" << x << ", " << y << "), Size (" << width << ", " << height << ")\n";
+                    //std::cout << "Rectangle: Position (" << x << ", " << y << "), Size (" << width << ", " << height << ")\n";
                 }
                 if (type && std::string(type) == "poly"){
                     float x, y;
@@ -120,10 +120,11 @@ MapInterface::MapInterface(const std::string& filename, const std::string& textu
                             polygonPoints.push_back(sf::Vector2f(x + px, y + py));
                         }
 
-                        std::cout << "Polygon points for object at (" << x << ", " << y << "):\n";
+                        /*std::cout << "Polygon points for object at (" << x << ", " << y << "):\n";
                         for (const auto& point : polygonPoints) {
                             std::cout << "Point: (" << point.x << ", " << point.y << ")\n";
                         }
+                        */
                         
                             // Now polygonPoints contains all the points of the polygon relative to (x, y)
                             collidesPoly.push_back(polygonPoints);
@@ -236,7 +237,7 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
         draw(window);
         window.draw(spritePlayer);
 
-        // Dessiner les rectangles de collision
+        /* Dessiner les rectangles de collision
         for (const auto& collide : collides) {
             sf::RectangleShape rect;
             rect.setSize(sf::Vector2f(collide.width, collide.height));
@@ -245,7 +246,7 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
             window.draw(rect);
         }
         // Draw collision polygons
-    for (const auto& polygon : collidesPoly) {
+        for (const auto& polygon : collidesPoly) {
         sf::ConvexShape convex;
         convex.setPointCount(polygon.size()); // Set the number of points
 
@@ -257,7 +258,9 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
         // Set position and color
         convex.setFillColor(sf::Color(0, 255, 0, 128)); // Semi-transparent green
         window.draw(convex);
-    }
+        
+        }
+        */
         
 
         window.display();
