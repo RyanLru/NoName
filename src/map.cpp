@@ -1,5 +1,6 @@
 #include "map.h"
 #include "librairies.h"
+#include "inventory.h"
 
 MapInterface::MapInterface(const std::string& filename, const std::string& textureFilename, sf::RenderWindow& window) {
     // Charger la texture des tuiles
@@ -154,6 +155,7 @@ void MapInterface::draw(sf::RenderWindow& window) {
 int MapInterface::LoadMap(sf::RenderWindow& window) {
     // Librairies
     Librairies librairies;
+    Inventory inventory;
 
     // Affiche un background
     sf::Texture textureBackground;
@@ -189,6 +191,9 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
     // Position initiale du joueur
     playerPosition = sf::Vector2f(1920 / 2, 1080 / 2);
 
+    // Boolean pour les affichages
+    bool inventoryDisplayed = false;
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -210,6 +215,11 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             move.x += playerSpeed;
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
+            inventoryDisplayed = !inventoryDisplayed;
+            // Attendre 0,5s pour éviter les clics multiples
+            sf::sleep(sf::milliseconds(100));
         }
 
         // Normaliser le vecteur de mouvement pour éviter les mouvements diagonaux plus rapides
@@ -236,6 +246,11 @@ int MapInterface::LoadMap(sf::RenderWindow& window) {
         window.draw(spriteBackground);
         draw(window);
         window.draw(spritePlayer);
+
+        // Afficher l'inventaire
+        if (inventoryDisplayed) {
+            inventory.draw(window);
+        }
 
         /* Dessiner les rectangles de collision
         for (const auto& collide : collides) {
