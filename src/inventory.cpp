@@ -24,7 +24,20 @@ void Inventory::draw(sf::RenderWindow& window){
     spriteInventory.setTexture(textureInventory);
     spriteInventory.setPosition(1920 / 2 - textureInventory.getSize().x / 2 * 7.5f, 1040 - textureInventory.getSize().y * 7.5f);
     spriteInventory.setScale(7.5f, 7.5f);
+
+    // Ajout du sprite du joueur : 
+    sf::Texture texturePlayer;
+    if (!texturePlayer.loadFromFile("../assets/Perso/Perso_Basique.png")) {
+        std::cerr << "Failed to load player texture!" << std::endl;
+        return;
+    }
+    sf::Sprite spritePlayer;
+    spritePlayer.setTexture(texturePlayer);
+    spritePlayer.setPosition(1920 / 2 - 130, 1080 / 2 - 395);
+    spritePlayer.setScale(16, 16);
+
     window.draw(spriteInventory);
+    window.draw(spritePlayer);
 
     return;
 }
