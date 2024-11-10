@@ -14,12 +14,17 @@ Inventory::Inventory(){
     * Affiche l'inventaire du joueur
 */
 void Inventory::draw(sf::RenderWindow& window){
-    // Rectangle bleu nuit avec un alpha de 128
-    sf::RectangleShape rect;
-    rect.setSize(sf::Vector2f(1880, 1040));
-    rect.setPosition(20, 20);
-    rect.setFillColor(sf::Color(0, 0, 128, 128));
-    window.draw(rect);
+    // Chargement de l'image de l'inventaire du joueur 
+    sf::Texture textureInventory;
+    if (!textureInventory.loadFromFile("../assets/UI/Inventory.png")) {
+        std::cerr << "Failed to load inventory texture!" << std::endl;
+        return;
+    }
+    sf::Sprite spriteInventory;
+    spriteInventory.setTexture(textureInventory);
+    spriteInventory.setPosition(1920 / 2 - textureInventory.getSize().x / 2 * 7.5f, 1040 - textureInventory.getSize().y * 7.5f);
+    spriteInventory.setScale(7.5f, 7.5f);
+    window.draw(spriteInventory);
 
     return;
 }
